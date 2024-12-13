@@ -1,23 +1,110 @@
 package com.anasdev.gestiondelivraisonservice.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-import java.util.Date;
+import java.math.BigDecimal;
 
 @Entity
-@Data // Lombok will automatically generate getters and setters
-@NoArgsConstructor
-@AllArgsConstructor
 public class Livraison {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String destination;
-    private String status;
-    private Date createdAt; // Ensure this field is of type Date
-    private Date updatedAt; // Ensure this field is of type Date
-    private String deliveryPerson;
+    private Long utilisateurId;
 
+    private String depart;
+
+    private String arrivee;
+
+    private String flux;
+
+    private Double poids;
+
+    private BigDecimal prix;
+
+    private String status;
+
+    private Double latitude;   // Nouvelle latitude pour la position GPS
+    private Double longitude;  // Nouvelle longitude pour la position GPS
+
+    // Getters et Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUtilisateurId() {
+        return utilisateurId;
+    }
+
+    public void setUtilisateurId(Long utilisateurId) {
+        this.utilisateurId = utilisateurId;
+    }
+
+    public String getDepart() {
+        return depart;
+    }
+
+    public void setDepart(String depart) {
+        this.depart = depart;
+    }
+
+    public String getArrivee() {
+        return arrivee;
+    }
+
+    public void setArrivee(String arrivee) {
+        this.arrivee = arrivee;
+    }
+
+    public String getFlux() {
+        return flux;
+    }
+
+    public void setFlux(String flux) {
+        this.flux = flux;
+    }
+
+    public Double getPoids() {
+        return poids;
+    }
+
+    public void setPoids(Double poids) {
+        this.poids = poids;
+    }
+
+    public BigDecimal getPrix() {
+        return prix;
+    }
+
+    public void setPrix(BigDecimal prix) {
+        this.prix = prix;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
 }
