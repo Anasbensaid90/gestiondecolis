@@ -1,8 +1,6 @@
 package com.anasdev.gestiondelivraisonservice.model;
-
+import com.anasdev.gestiondecolisservice.model.Colis;
 import jakarta.persistence.*;
-import java.math.BigDecimal;
-
 @Entity
 public class Livraison {
 
@@ -10,24 +8,18 @@ public class Livraison {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long utilisateurId;
+    private String codeLivraison; // Code unique pour identifier la livraison.
 
-    private String depart;
+    @OneToOne
+    @JoinColumn(name = "colis_id", referencedColumnName = "id")
+    private Colis colis; // Association avec un colis.
 
-    private String arrivee;
+    private String livreur; // Nom ou ID du livreur assigné.
 
-    private String flux;
+    @Enumerated(EnumType.STRING)
+    private EtatLivraison etat; // En attente, en cours, terminée.
 
-    private Double poids;
 
-    private BigDecimal prix;
-
-    private String status;
-
-    private Double latitude;   // Nouvelle latitude pour la position GPS
-    private Double longitude;  // Nouvelle longitude pour la position GPS
-
-    // Getters et Setters
     public Long getId() {
         return id;
     }
@@ -36,75 +28,35 @@ public class Livraison {
         this.id = id;
     }
 
-    public Long getUtilisateurId() {
-        return utilisateurId;
+    public String getCodeLivraison() {
+        return codeLivraison;
     }
 
-    public void setUtilisateurId(Long utilisateurId) {
-        this.utilisateurId = utilisateurId;
+    public void setCodeLivraison(String codeLivraison) {
+        this.codeLivraison = codeLivraison;
     }
 
-    public String getDepart() {
-        return depart;
+    public Colis getColis() {
+        return colis;
     }
 
-    public void setDepart(String depart) {
-        this.depart = depart;
+    public void setColis(Colis colis) {
+        this.colis = colis;
     }
 
-    public String getArrivee() {
-        return arrivee;
+    public String getLivreur() {
+        return livreur;
     }
 
-    public void setArrivee(String arrivee) {
-        this.arrivee = arrivee;
+    public void setLivreur(String livreur) {
+        this.livreur = livreur;
     }
 
-    public String getFlux() {
-        return flux;
+    public EtatLivraison getEtat() {
+        return etat;
     }
 
-    public void setFlux(String flux) {
-        this.flux = flux;
-    }
-
-    public Double getPoids() {
-        return poids;
-    }
-
-    public void setPoids(Double poids) {
-        this.poids = poids;
-    }
-
-    public BigDecimal getPrix() {
-        return prix;
-    }
-
-    public void setPrix(BigDecimal prix) {
-        this.prix = prix;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
-    public Double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
+    public void setEtat(EtatLivraison etat) {
+        this.etat = etat;
     }
 }

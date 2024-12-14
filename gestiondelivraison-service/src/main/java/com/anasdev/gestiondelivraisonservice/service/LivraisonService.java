@@ -5,6 +5,7 @@ import com.anasdev.gestiondelivraisonservice.repository.LivraisonRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LivraisonService {
@@ -19,23 +20,11 @@ public class LivraisonService {
         return livraisonRepository.findAll();
     }
 
-    public Livraison getLivraisonById(Long id) {
-        return livraisonRepository.findById(id).orElseThrow(() -> new RuntimeException("Livraison not found"));
+    public Optional<Livraison> getLivraisonById(Long id) {
+        return livraisonRepository.findById(id);
     }
 
-    public Livraison createLivraison(Livraison livraison) {
-        return livraisonRepository.save(livraison);
-    }
-
-    public Livraison updateLivraison(Long id, Livraison updatedLivraison) {
-        Livraison livraison = getLivraisonById(id);
-        livraison.setUtilisateurId(updatedLivraison.getUtilisateurId());
-        livraison.setDepart(updatedLivraison.getDepart());
-        livraison.setArrivee(updatedLivraison.getArrivee());
-        livraison.setFlux(updatedLivraison.getFlux());
-        livraison.setPoids(updatedLivraison.getPoids());
-        livraison.setPrix(updatedLivraison.getPrix());
-        livraison.setStatus(updatedLivraison.getStatus());
+    public Livraison saveLivraison(Livraison livraison) {
         return livraisonRepository.save(livraison);
     }
 

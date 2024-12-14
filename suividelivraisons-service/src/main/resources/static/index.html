@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi des Livraisons</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>#map { height: 500px; }</style>
+</head>
+<body>
+
+<h2>Suivi des Livraisons</h2>
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    const map = L.map('map').setView([48.8566, 2.3522], 12);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    const vehicleMarkers = {};
+
+    const ws = new WebSocket('ws://localhost:8082/livraisons');
+    ws.onmessage = event => {
+        const { vehicleId, latitude, longitude } = JSON.parse(event.data);
+
+        if (!vehicleMarkers[vehicleId]) {
+            vehicleMarkers[vehicleId] = L.marker([latitude, longitude]).addTo(map);
+        } else {
+            vehicleMarkers[vehicleId].setLatLng([latitude, longitude]);
+        }
+
+        map.setView([latitude, longitude], 12); // Recentre la carte sur le véhicule
+    };
+</script>
+
+</body>
+</html>
