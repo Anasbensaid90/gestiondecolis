@@ -1,6 +1,10 @@
 package com.anasdev.gestiondelivraisonservice.model;
-import com.anasdev.gestiondecolisservice.model.Colis;
+
 import jakarta.persistence.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Livraison {
 
@@ -8,17 +12,28 @@ public class Livraison {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String codeLivraison; // Code unique pour identifier la livraison.
+    private Long utilisateurId;
 
-    @OneToOne
-    @JoinColumn(name = "colis_id", referencedColumnName = "id")
-    private Colis colis; // Association avec un colis.
+    private String depart;
 
-    private String livreur; // Nom ou ID du livreur assigné.
+    private String arrivee;
 
-    @Enumerated(EnumType.STRING)
-    private EtatLivraison etat; // En attente, en cours, terminée.
+    private String flux;
 
+    private Double poids;
+
+    private BigDecimal prix;
+
+    private String status;
+
+    private Double latitude;   // Nouvelle latitude pour la position GPS
+    private Double longitude;  // Nouvelle longitude pour la position GPS
+
+    // Liste des identifiants des colis associés à cette livraison
+    @ElementCollection
+    @CollectionTable(name = "livraison_colis", joinColumns = @JoinColumn(name = "livraison_id"))
+    @Column(name = "colis_id")
+    private List<Long> colisIds = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -28,35 +43,83 @@ public class Livraison {
         this.id = id;
     }
 
-    public String getCodeLivraison() {
-        return codeLivraison;
+    public Long getUtilisateurId() {
+        return utilisateurId;
     }
 
-    public void setCodeLivraison(String codeLivraison) {
-        this.codeLivraison = codeLivraison;
+    public void setUtilisateurId(Long utilisateurId) {
+        this.utilisateurId = utilisateurId;
     }
 
-    public Colis getColis() {
-        return colis;
+    public String getDepart() {
+        return depart;
     }
 
-    public void setColis(Colis colis) {
-        this.colis = colis;
+    public void setDepart(String depart) {
+        this.depart = depart;
     }
 
-    public String getLivreur() {
-        return livreur;
+    public String getArrivee() {
+        return arrivee;
     }
 
-    public void setLivreur(String livreur) {
-        this.livreur = livreur;
+    public void setArrivee(String arrivee) {
+        this.arrivee = arrivee;
     }
 
-    public EtatLivraison getEtat() {
-        return etat;
+    public String getFlux() {
+        return flux;
     }
 
-    public void setEtat(EtatLivraison etat) {
-        this.etat = etat;
+    public void setFlux(String flux) {
+        this.flux = flux;
+    }
+
+    public Double getPoids() {
+        return poids;
+    }
+
+    public void setPoids(Double poids) {
+        this.poids = poids;
+    }
+
+    public BigDecimal getPrix() {
+        return prix;
+    }
+
+    public void setPrix(BigDecimal prix) {
+        this.prix = prix;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public List<Long> getColisIds() {
+        return colisIds;
+    }
+
+    public void setColisIds(List<Long> colisIds) {
+        this.colisIds = colisIds;
     }
 }
